@@ -3,15 +3,12 @@
 import { useState } from "react";
 import FormSection from "./components/FormSection";
 import PreviewSection from "./components/PreviewSection";
+import { ThemeName } from "./lib/svg-themes";
 
 export default function Home() {
   const [name, setName] = useState("");
   const [caption, setCaption] = useState("");
-  const [previewKey, setPreviewKey] = useState(0);
-
-  const handleGenerate = () => {
-    setPreviewKey((prev) => prev + 1);
-  };
+  const [theme, setTheme] = useState<ThemeName>("gradient");
 
   return (
     <div className="min-h-screen bg-linear-to-br from-purple-50 via-blue-50 to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
@@ -37,19 +34,16 @@ export default function Home() {
             <FormSection
               name={name}
               caption={caption}
+              theme={theme}
               onNameChange={setName}
               onCaptionChange={setCaption}
-              onGenerate={handleGenerate}
+              onThemeChange={setTheme}
             />
           </div>
 
           {/* Preview Section */}
           <div className="order-1 lg:order-2">
-            <PreviewSection
-              name={name}
-              caption={caption}
-              previewKey={previewKey}
-            />
+            <PreviewSection name={name} caption={caption} theme={theme} />
           </div>
         </div>
       </main>

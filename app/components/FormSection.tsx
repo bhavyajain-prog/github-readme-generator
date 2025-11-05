@@ -1,18 +1,23 @@
 "use client";
 
+import { themeList, ThemeName } from "@/app/lib/svg-themes";
+
 interface FormSectionProps {
   name: string;
   caption: string;
+  theme: ThemeName;
   onNameChange: (name: string) => void;
   onCaptionChange: (caption: string) => void;
-  onGenerate: () => void;
+  onThemeChange: (theme: ThemeName) => void;
 }
 
 export default function FormSection({
   name,
   caption,
+  theme,
   onNameChange,
   onCaptionChange,
+  onThemeChange,
 }: FormSectionProps) {
   return (
     <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 border border-gray-100 dark:border-gray-700">
@@ -55,9 +60,32 @@ export default function FormSection({
             type="text"
             value={caption}
             onChange={(e) => onCaptionChange(e.target.value)}
-            placeholder="Bonker"
+            placeholder="Vibe Coder"
             className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all duration-200 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500"
           />
+        </div>
+
+        {/* Theme Selector */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+            Theme
+          </label>
+          <div className="flex flex-wrap gap-2">
+            {themeList.map((t) => (
+              <button
+                key={t.value}
+                type="button"
+                onClick={() => onThemeChange(t.value)}
+                className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                  theme === t.value
+                    ? "bg-purple-600 text-white shadow-md"
+                    : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
+                }`}
+              >
+                {t.label}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </div>

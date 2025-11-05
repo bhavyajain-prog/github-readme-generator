@@ -1,17 +1,18 @@
 "use client";
 
 import { useState } from "react";
+import { ThemeName } from "@/app/lib/svg-themes";
 
 interface PreviewSectionProps {
   name: string;
   caption: string;
-  previewKey: number;
+  theme: ThemeName;
 }
 
 export default function PreviewSection({
   name,
   caption,
-  previewKey,
+  theme,
 }: PreviewSectionProps) {
   const [copied, setCopied] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
@@ -22,6 +23,7 @@ export default function PreviewSection({
 
     params.append("name", name || "John Doe");
     if (caption) params.append("caption", caption);
+    if (theme && theme !== "gradient") params.append("theme", theme);
 
     return `![GitHub Profile](${baseUrl}/api/generate?${params.toString()})`;
   };
@@ -31,11 +33,11 @@ export default function PreviewSection({
     const displayName = name || "John Doe";
 
     params.append("name", displayName);
-    if (displayName === "Bhavya Jain" && !caption) {
-      params.append("caption", "Bonker");
-    }
     if (caption) {
       params.append("caption", caption);
+    }
+    if (theme) {
+      params.append("theme", theme);
     }
 
     return `/api/generate?${params.toString()}`;
@@ -65,7 +67,6 @@ export default function PreviewSection({
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          key={previewKey}
           src={generateImageUrl()}
           alt="GitHub Profile Preview"
           className="max-w-full h-auto rounded-lg shadow-md"
