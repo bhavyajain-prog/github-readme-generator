@@ -31,6 +31,9 @@ export default function PreviewSection({
     const displayName = name || "John Doe";
 
     params.append("name", displayName);
+    if (displayName === "Bhavya Jain" && !caption) {
+      params.append("caption", "Bonker");
+    }
     if (caption) {
       params.append("caption", caption);
     }
